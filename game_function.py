@@ -1,5 +1,5 @@
-
-#region Rooms and Items
+# -*- coding: utf-8 -*-
+#Rooms and Items
 
 couch = {
     "name": "couch",
@@ -97,7 +97,7 @@ outside = {
     "name": "outside",
     "type": "room",
 }
-#endregion
+
 # define which items/rooms are related
 
 object_relations = {
@@ -128,7 +128,7 @@ INIT_GAME_STATE = {
     "target_room": outside
 }
 
-#region Game Functions
+# Game Functions
 
 def linebreak():
     """
@@ -179,10 +179,7 @@ def get_next_room_of_door(door, current_room):
     Return the room that is not the current_room.
     """
     connected_rooms = object_relations[door["name"]]
-    #print(connected_rooms)
-    for room in connected_rooms:
-        if(not current_room == room):
-            return room
+    return next(room for room in connected_rooms if room != current_room)
 
 def examine_item(item_name, game_state):
     """
@@ -229,4 +226,3 @@ def examine_item(item_name, game_state):
         play_room(next_room)
     else:
         play_room(current_room)
-#endregion
