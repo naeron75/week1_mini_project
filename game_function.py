@@ -158,7 +158,7 @@ def play_room(room, game_state):
         intended_action = input("What would you like to do? Type 'explore' or 'examine'?").strip()
         if intended_action == "explore":
             explore_room(room)
-            play_room(room)
+            play_room(room, game_state)
         elif intended_action == "examine":
             examine_item(input("What would you like to examine?").strip(), game_state)
         else:
@@ -223,6 +223,6 @@ def examine_item(item_name, game_state):
         print("The item you requested is not found in the current room.")
 
     if(next_room and input("Do you want to go to the next room? Enter 'yes' or 'no'").strip() == 'yes'):
-        play_room(next_room)
+        play_room(next_room, game_state)
     else:
-        play_room(current_room)
+        play_room(current_room, game_state)
