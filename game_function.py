@@ -160,7 +160,15 @@ def play_room(room, game_state):
             explore_room(room)
             play_room(room, game_state)
         elif intended_action == "examine":
-            examine_item(input("What would you like to examine?").strip(), game_state)
+            correct_item = False
+            while not correct_item:
+                item_to_examine = input("What would you like to examine?").strip()
+                items_in_room = [item['name'] for item in room['objects']]
+                if item_to_examine in items_in_room:
+                    examine_item(item_to_examine, game_state)
+                    correct_item = True
+                else:
+                    print("Sorry, this item doesn't exist or is not in this room, please enter a valid one.")
         else:
             print("Not sure what you mean. Type 'explore' or 'examine'.")
             play_room(room, game_state)
@@ -221,8 +229,19 @@ def examine_item(item_name, game_state):
 
     if(output is None):
         print("The item you requested is not found in the current room.")
-
-    if(next_room and input("Do you want to go to the next room? Enter 'yes' or 'no'").strip() == 'yes'):
-        play_room(next_room, game_state)
+        
+        
+    if(next_room):
+        correct_answer=False
+        while not correct_answer:
+            answer = input("Do you want to go to the next room? Enter 'yes' or 'no'").strip()
+            if answer=='yes':
+                play_room(next_room, game_state)
+                correct_answer=True
+            elif answer == 'no':
+                play_room(current_room, game_state)
+                correct_answer=True
+            else:
+                print("Not a valid command, please enter yes or no only.")
     else:
         play_room(current_room, game_state)
